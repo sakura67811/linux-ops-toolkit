@@ -1,0 +1,9 @@
+# 基础服务
+ssh
+nginx
+
+# 数据库服务
+mysql
+
+# 容器服务
+docker

@@ -1,0 +1,17 @@
+# Python 虚拟环境
+.venv/
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 运行日志；保留用于演示的样例日志
+*.log
+!sample.log
+
+# 自动生成的分析报告和备份
+reports/
+backups/
+
+# 本机创建的备份练习目录
+backup_demo/

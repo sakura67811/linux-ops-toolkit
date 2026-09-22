@@ -1,0 +1,14 @@
+{
+    "thresholds": {
+        "cpu": 90,
+        "memory": 80,
+        "disk": 80
+    },
+    "log_analysis": {
+        "path": "sample.log"
+    },
+    "backup": {
+        "source": "backup_demo",
+        "destination": "backups"
+    }
+}

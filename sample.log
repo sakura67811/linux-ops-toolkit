@@ -1,0 +1,7 @@
+2026-09-21 10:00:00 INFO application started
+2026-09-21 10:01:00 ERROR database connection failed
+2026-09-21 10:02:00 WARNING disk space is low
+2026-09-21 10:03:00 INFO request completed
+2026-09-21 10:04:00 error connection timeout
+2026-09-21 10:05:00 INFO application stopped
+2026-09-21 10:06:00 WARNING ERROR ERROR retry failed
