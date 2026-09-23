@@ -70,6 +70,9 @@ def get_service_status(services):
                 else:
                     status = load_state
 
+        except subprocess.TimeoutExpired:
+            status = "check-timeout"
+
         except FileNotFoundError:
             status = "command-not-found"
 

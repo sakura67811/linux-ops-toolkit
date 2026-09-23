@@ -7,6 +7,37 @@ from backup_ops import backup_path, save_backup_record
 
 
 class TestBackupOperations(unittest.TestCase):
+    def test_record_name_collision_preserves_backup(self):
+        for source_type in ["file", "directory"]:
+            for name in ["backup_record.json", "BACKUP_RECORD.JSON"]:
+                with self.subTest(source_type=source_type, name=name):
+                    with tempfile.TemporaryDirectory() as temp_dir:
+                        root = Path(temp_dir)
+                        source = root / name
+                        if source_type == "directory":
+                            source.mkdir()
+                            original = source / "data.txt"
+                        else:
+                            original = source
+                        original.write_text("原始内容\n", encoding="utf-8")
+
+                        target = backup_path(source, root / "backups")
+                        record_path = save_backup_record(source, target)
+                        copied = target / "data.txt" if target.is_dir() else target
+
+                        self.assertEqual(copied.read_bytes(), original.read_bytes())
+                        self.assertNotEqual(record_path, target)
+                        self.assertEqual(record_path.parent, target.parent)
+                        record = json.loads(record_path.read_text(encoding="utf-8"))
+                        self.assertEqual(record["source_type"], source_type)
+                        self.assertEqual(record["target_path"], str(target.resolve()))
+                        self.assertEqual(record["status"], "completed")
+                        saved_record = record_path.read_bytes()
+                        with self.assertRaises(FileExistsError):
+                            save_backup_record(source, target)
+                        self.assertEqual(record_path.read_bytes(), saved_record)
+                        self.assertEqual(copied.read_bytes(), original.read_bytes())
+
     def test_file_backup_preserves_content(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)

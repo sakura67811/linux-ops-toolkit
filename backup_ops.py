@@ -44,7 +44,11 @@ def backup_path(source_path, destination_dir):
     return target_path
 
 def save_backup_record(source_path, target_path):
-    record_path = target_path.parent / "backup_record.json"
+    # 忽略大小写比较，兼容 Windows 常见的文件名匹配方式。
+    record_name = "backup_record.json"
+    if target_path.name.casefold() == record_name:
+        record_name = "backup_record_meta.json"
+    record_path = target_path.parent / record_name
 
     record = {
         "recorded_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
