@@ -191,3 +191,21 @@ Copy-Item .\config.json .\backup_demo\subdir\config.json
 - 单文件备份会比较复制前后的内容；目录备份尚未逐文件校验。
 - 目录内部的符号链接按链接保存，不保证包含链接指向的数据。
 - 备份不是一致性快照，暂不适合直接复制正在写入的数据库文件。
+## 自动化测试
+
+在项目根目录执行。
+
+Windows PowerShell：
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+```
+
+Linux：
+
+```bash
+.venv/bin/python -m unittest discover -s tests -v
+```
+
+当前测试覆盖日志关键字行数统计、匹配内容数量限制，
+以及日志文件不存在时的错误返回。
